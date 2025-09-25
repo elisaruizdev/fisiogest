@@ -1,0 +1,34 @@
+<div class="header">
+    <mat-toolbar class="header__toolbar">
+
+         @if(isMobile){
+          <button type="button" aria-label="Abrir menú de navegación" mat-icon-button class="header__menu-button"
+            [class.header__menu-button--mobile]="isMobile" (click)="onToggleSidenav()">
+            <mat-icon class="header__menu-icon">menu</mat-icon>
+        </button>
+         }
+
+        <span class="header__title" [class.header__title--mobile]="isMobile"
+            [attr.aria-label]="'Página actual: ' + currentPageTitle">
+            {{currentPageTitle}}
+        </span>
+
+        <span class="header__spacer"></span>
+
+        <div class="header__actions" role="group" aria-label="Acciones de usuario">
+
+            <div class="header__notifications">
+                <app-notifications class="header__notifications-menu" 
+                    aria-label="Menú de notificaciones">
+                </app-notifications>
+            </div>
+>
+            <div class="header__user">
+                <app-user-menu class="header__user-menu"  aria-label="Menú de usuario">
+                </app-user-menu>
+            </div>
+
+        </div>
+
+    </mat-toolbar>
+</div>
