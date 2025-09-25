@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class Header {
   @Input() isMobile: boolean | null = false;
   @Input() currentPageTitle: string = '';
-  @Input() notifications: any = [];
+  notifications = input<any[]>()
 
   userInfo = input<any>()
   toggleSidenav = output<void>();
