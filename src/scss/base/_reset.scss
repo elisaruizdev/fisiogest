@@ -1,0 +1,236 @@
+@use '../abstracts/variables' as *;
+
+// ============================================
+// RESET CSS MODERNO
+// ============================================
+
+// Box-sizing en todos los elementos
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+// HTML y body
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: $font-primary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
+    line-height: 1.6;
+    color: $color-text-primary;
+    background: $color-white;
+    min-height: 100vh;
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    font-weight: $font-weight-bold;
+    line-height: 1.2;
+}
+
+// Párrafos
+p {
+    margin: 0;
+    padding: 0;
+}
+
+// Listas
+ul,
+ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+// Links
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: $transition-all;
+}
+
+// Imágenes
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+// Formularios
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+// Quitar estilos por defecto de inputs tipo number
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield; 
+}
+
+// Tablas
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+// HR
+hr {
+    border: none;
+    border-top: 1px solid $color-border;
+    margin: $spacing-lg 0;
+}
+
+// Strong y bold
+b,
+strong {
+    font-weight: $font-weight-bold;
+}
+
+// Code y pre
+code,
+pre {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+// Blockquote
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+
+// Fieldset
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+// Legend
+legend {
+    padding: 0;
+}
+
+// Address
+address {
+    font-style: normal;
+}
+
+// Abbr
+abbr[title] {
+    text-decoration: underline dotted;
+    cursor: help;
+}
+
+// Details y summary
+details {
+    display: block;
+}
+
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+// Template y hidden
+template,
+[hidden] {
+    display: none;
+}
+
+// Eliminar outline en Firefox
+:focus {
+    outline: 0;
+}
+
+// Selección de texto
+::selection {
+    background: $color-primary-medium;
+    color: $color-white;
+}
+
+::-moz-selection {
+    background: $color-primary-medium;
+    color: $color-white;
+}
+
+// Scrollbar personalizado (opcional)
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: $color-background-light;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $color-text-tertiary;
+    border-radius: 5px;
+
+    &:hover {
+        background: $color-text-secondary;
+    }
+}
+
+// Accesibilidad: ocultar visualmente pero mantener para lectores de pantalla
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

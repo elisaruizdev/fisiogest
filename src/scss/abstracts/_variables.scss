@@ -1,0 +1,108 @@
+// ============================================
+// COLORES
+// ============================================
+
+// Morados (principal)
+$color-primary: #4F0FE6;
+$color-primary-dark: #1D0A49;
+$color-primary-medium: #5b21b6;
+$color-primary-light: #7c3aed;
+$color-primary-darker: #2d1b4e;
+$color-primary-darkest: #1e1333;
+
+// Grises y negros
+$color-text-primary: #1a1a2e;
+$color-text-secondary: #6b7280;
+$color-text-tertiary: #9ca3af;
+$color-text-muted: #4b5563;
+
+// Blancos y fondos
+$color-white: #ffffff;
+$color-background-light: #f9fafb;
+$color-border: #e5e7eb;
+
+// Transparencias
+$color-white-overlay: rgba(255, 255, 255, 0.15);
+$color-primary-shadow: rgba(91, 33, 182, 0.1);
+$color-primary-shadow-dark: rgba(45, 27, 78, 0.3);
+
+// ============================================
+// FUENTES
+// ============================================
+
+$font-primary: 'Inter', sans-serif;
+$font-display: 'MuseoModerno', sans-serif;
+
+// Pesos de fuente
+$font-weight-light: 200;
+$font-weight-normal: 300;
+$font-weight-medium: 600;
+$font-weight-bold: 700;
+
+// Tamaños de fuente
+$font-size-xs: 14px;
+$font-size-sm: 15px;
+$font-size-base: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 25px;
+$font-size-2xl: 32px;
+$font-size-3xl: 96px;
+
+// ============================================
+// ESPACIADOS
+// ============================================
+
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 40px;
+$spacing-3xl: 48px;
+$spacing-4xl: 56px;
+
+// ============================================
+// BORDER RADIUS
+// ============================================
+
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 24px;
+$border-radius-xl: 30px;
+
+// ============================================
+// BORDERS
+// ============================================
+
+$border-width: 2px;
+$border-style: solid;
+
+// ============================================
+// TRANSICIONES
+// ============================================
+
+$transition-fast: 0.2s;
+$transition-medium: 0.3s;
+$transition-ease: ease;
+$transition-all: all 0.2s ease;
+
+// ============================================
+// SOMBRAS
+// ============================================
+
+$box-shadow-sm: 0 0 0 3px rgba(91, 33, 182, 0.1);
+$box-shadow-md: 0 4px 12px rgba(45, 27, 78, 0.3);
+
+// ============================================
+// GRADIENTES
+// ============================================
+
+$gradient-primary: linear-gradient(180deg, #4F0FE6 0%, #1D0A49 100%);
+
+// ============================================
+// Z-INDEX
+// ============================================
+
+$z-index-dropdown: 100;
+$z-index-header: 200;
+$z-index-modal: 1000;
