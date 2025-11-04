@@ -4,16 +4,13 @@ import { publicGuard } from './features/auth/guards/public.guard'; */
 
 
 export const routes: Routes = [
-    {
-        path: '',
-        loadComponent: () =>
-            import('./features/auth/pages/login/login')
-                .then(m => m.Login),
-        title: 'Iniciar sesión - Fisiogest'
-    },
-    {
-        path: 'auth',
-        loadChildren: () =>
-            import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
-    }
-]
+  {
+    path: '',
+    loadChildren: () => import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./features/private-area/private-area.routes').then((m) => m.privateAreaRoutes),
+  },
+];   
