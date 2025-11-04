@@ -1,0 +1,40 @@
+<div class="dashboard">
+    <!-- <h1 class="dashboard__title">Dashboard</h1> -->
+    <p class="dashboard__subtitle">Hoy 28 de Noviembre, 2024</p>
+
+    <section class="dashboard__cards">
+        <div class="dashboard__card">
+            <div class="dashboard__card_title-contain">
+                <h3 class="dashboard__card-title">Sesiones hoy</h3>
+                <img src="icons/list.svg" alt="icono de lista" class="dashboard__card-icon">
+            </div>
+
+            <p class="dashboard__card-value">12</p>
+            <p class="dashboard__card-subtitle">4 completadas</p>
+        </div>
+
+        <div class="dashboard__card">
+            <div class="dashboard__card_title-contain">
+                <h3 class="dashboard__card-title">Sesiones semana</h3>
+                <img src="icons/list.svg" alt="icono de lista" class="dashboard__card-icon">
+            </div>
+            <p class="dashboard__card-value">50</p>
+            <p class="dashboard__card-subtitle">Próximos 7 días</p>
+        </div>
+        <div class="dashboard__card">
+            <div class="dashboard__card_title-contain">
+                <h3 class="dashboard__card-title">Pacientes activos</h3>
+                <img src="icons/patient.svg" alt="icono de pacientes" class="dashboard__card-icon">
+            </div>
+
+            <p class="dashboard__card-value">75</p>
+        </div>
+
+    </section>
+
+    <section class="dashboard__table">
+        <h2 class="dashboard__title">Sesiones hoy</h2>
+        <app-table [config]="sesionesHoyConfig"></app-table>
+    </section>
+    
+</div>

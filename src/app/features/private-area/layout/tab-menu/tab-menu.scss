@@ -1,0 +1,45 @@
+.tab-menu {
+    display: flex;
+    background: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.25rem;
+        text-decoration: none;
+        color: #6b7280;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s;
+        font-weight: 500;
+        font-size: 0.875rem;
+        margin-bottom: -2px;
+
+        &:hover {
+            color: #111827;
+            background: rgba(79, 70, 229, 0.05);
+        }
+
+        &--active {
+            color: #5b21b6;
+            border-bottom-color: #5b21b6;
+            .tab-menu__icon {
+                filter: brightness(0) saturate(100%) invert(21%) sepia(89%) saturate(4442%) hue-rotate(264deg) brightness(87%) contrast(99%);
+            }
+        }
+    }
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+        filter: brightness(0) saturate(100%) invert(47%) sepia(6%) saturate(587%) hue-rotate(179deg) brightness(92%) contrast(86%);
+        transition: filter 0.2s;
+    }
+
+    &__label {
+        white-space: nowrap;
+        font-family: MuseoModerno, sans-serif;
+    }
+}

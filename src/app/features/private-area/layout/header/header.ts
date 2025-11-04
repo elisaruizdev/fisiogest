@@ -1,14 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, input, Input, output, Output } from '@angular/core';
-import { Notifications } from '../notifications/notifications';
-import { UserMenu } from '../user-menu/user-menu';
-import { MatToolbar } from '@angular/material/toolbar';
+import { Component, input, Input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, MatToolbar, MatButtonModule, MatIconModule, UserMenu, Notifications],
+  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
