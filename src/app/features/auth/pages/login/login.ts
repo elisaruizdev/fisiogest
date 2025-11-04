@@ -3,7 +3,7 @@ import { LoginLayout } from "../../components/login-layout/login-layout";
 
 @Component({
   selector: 'app-login',
-  imports: [LoginLayout],
+  imports: [],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })

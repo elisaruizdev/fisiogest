@@ -1,1 +1,54 @@
-<app-login-layout></app-login-layout>
+<div class="login-form">
+    <header class="login-form__header">
+        <h2 class="login-form__title">Bienvenido de nuevo</h2>
+        <p class="login-form__subtitle">Logueate para acceder a la plataforma</p>
+    </header>
+
+    <form class="login-form__form">
+        <div class="login-form__field">
+            <label class="login-form__label" for="email">Email</label>
+            <div class="login-form__input-wrapper">
+                <svg class="login-form__icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+                </svg>
+                <input class="login-form__input" type="email" id="email" placeholder="email@fisiogest.es" />
+            </div>
+        </div>
+
+        <div class="login-form__field">
+            <label class="login-form__label" for="password">Contraseña</label>
+            <div class="login-form__input-wrapper">
+                <svg class="login-form__icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <input class="login-form__input" type="password" id="password" placeholder="***********" />
+            </div>
+        </div>
+
+        <div class="login-form__options">
+<!--             <label class="login-form__checkbox">
+                <input type="checkbox" class="login-form__checkbox-input" />
+                <span class="login-form__checkbox-label">Recuérdame</span>
+            </label> -->
+            <a href="/recuperar-contraseña" class="login-form__link">
+                He olvidado mi contraseña
+            </a>
+        </div>
+
+        <button type="submit" class="login-form__button">
+            Iniciar sesión
+        </button>
+
+        <div class="login-form__divider">
+            <span class="login-form__divider-text">O si no tienes cuenta</span>
+        </div>
+
+        <a href="/registro" class="login-form__register-link">
+            Solicitar acceso
+        </a>
+    </form>
+</div>
