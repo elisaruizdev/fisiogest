@@ -1,0 +1,36 @@
+<div class="card-info">
+    <div class="field-header">
+        <label class="field-label">{{ label }}</label>
+        @if(editable && !isEditing){
+            <button mat-icon-button class="edit-button" (click)="startEdit()">
+               <mat-icon>edit</mat-icon>
+            </button>
+        }
+
+    </div>
+    
+    @if(!isEditing){
+        <div class="field-value">
+            {{ value || '-' }}
+        </div>
+    }
+
+    @if(isEditing){
+    <div class="field-edit">
+        <input [(ngModel)]="editValue" [type]="type" [placeholder]="placeholder" class="field-input" (keyup.enter)="save()"
+            (keyup.escape)="cancel()">
+    
+        <div class="field-actions">
+            <button class="btn btn-save" (click)="save()">
+                <mat-icon>check</mat-icon>
+                Guardar
+            </button>
+            <button class="btn btn-cancel" (click)="cancel()">
+                <mat-icon>close</mat-icon>
+                Cancelar
+            </button>
+        </div>
+    </div>
+    }
+   
+</div>
