@@ -1,6 +1,12 @@
 .patients {
   padding: 0.5rem;
 
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
   &__title {
     font-size: 2rem;
     font-weight: bold;
@@ -58,9 +64,6 @@
     font-weight: 400;
   }
 
-  &__table {
-    margin-top: 2rem;
-  }
 
   &__title {
     font-size: 1.5rem;
