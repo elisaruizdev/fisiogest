@@ -1,0 +1,84 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="f-form">
+    @for (section of config.sections; track $index) {
+    <div class="f-form__section" [ngClass]="section.cssClass">
+        @if (section.title) {
+        <div class="f-form__section-header">
+            <h3 class="f-form__section-title">{{ section.title }}</h3>
+            @if (section.subtitle) {
+            <p class="f-form__section-subtitle">{{ section.subtitle }}</p>
+            }
+        </div>
+        }
+        <div class="f-form__fields">
+            @for (field of section.fields; track field.name) {
+            <div class="f-form__field" [ngClass]="field.cssClass" [style.grid-column]="field.gridColumn">
+                @if (field.type === 'checkbox') {
+                <div class="f-form__checkbox-wrapper">
+                    <label class="f-form__checkbox-label">
+                        <input type="checkbox" [id]="field.name" [formControlName]="field.name"
+                            class="f-form__checkbox-input" />
+                        <span class="f-form__checkbox-custom"></span>
+                        <span class="f-form__checkbox-text">
+                            {{ field.label }}
+                            @if (field.checkboxLink) {
+                            <a [href]="field.checkboxLink.linkUrl" target="_blank" class="f-form__checkbox-link">
+                                {{ field.checkboxLink.linkText }}
+                            </a>
+                            }
+                        </span>
+                    </label>
+                    @if (hasError(field.name)) {
+                    <span class="f-form__error">{{ getFieldError(field.name) }}</span>
+                    }
+                </div>
+                } @else {
+                <label [for]="field.name" class="f-form__label">
+                    {{ field.label }}
+                    @if (field.required) {
+                    <span class="f-form__required">*</span>
+                    }
+                </label>
+                <div class="f-form__input-wrapper" [class.f-form__input-wrapper--error]="hasError(field.name)">
+                    @if (field.icon) {
+                    <span class="f-form__icon" [innerHTML]="getIconSvg(field.icon)"></span>
+                    }
+                    @if (['text', 'email', 'tel', 'number', 'date', 'password'].includes(field.type)) {
+                    <input [type]="field.type" [id]="field.name" [formControlName]="field.name"
+                        [placeholder]="field.placeholder || ''" class="f-form__input"
+                        [class.f-form__input--with-icon]="field.icon" />
+                    }
+                    @if (field.type === 'select') {
+                    <select [id]="field.name" [formControlName]="field.name" class="f-form__select"
+                        [class.f-form__select--with-icon]="field.icon">
+                        <option value="" disabled selected>{{ field.placeholder || 'Seleccione...' }}</option>
+                        @for (option of field.options; track option.value) {
+                        <option [value]="option.value">{{ option.label }}</option>
+                        }
+                    </select>
+                    }
+                    @if (field.type === 'textarea') {
+                    <textarea [id]="field.name" [formControlName]="field.name" [placeholder]="field.placeholder || ''"
+                        [rows]="field.rows || 3" class="f-form__textarea"
+                        [class.f-form__textarea--with-icon]="field.icon"></textarea>
+                    }
+                </div>
+                @if (hasError(field.name)) {
+                <span class="f-form__error">{{ getFieldError(field.name) }}</span>
+                }
+                }
+            </div>
+            }
+        </div>
+    </div>
+    }
+    <div class="f-form__actions">
+        @if (showCancelButton) {
+        <button type="button" class="f-form__button f-form__button--cancel" (click)="onCancel()">
+            {{ cancelButtonText }}
+        </button>
+        }
+        <button type="submit" class="f-form__button f-form__button--submit">
+            {{ submitButtonText }}
+        </button>
+    </div>
+</form>
