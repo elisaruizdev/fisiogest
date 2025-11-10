@@ -1,3 +1,7 @@
 <modal [title]="'Crear paciente'">
-
+    <f-form [config]="patientFormConfig" 
+    [submitButtonText]="'Crear Paciente'"
+    (formSubmit)="onSubmitPatient($event)"
+    [showCancelButton]="false">
+   </f-form>
 </modal>
