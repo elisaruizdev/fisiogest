@@ -15,3 +15,4 @@ export interface TableConfig {
   clickableRows?: boolean;
   clickableParams?: string;
 }
+

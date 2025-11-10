@@ -1,115 +1,110 @@
-import {
-  AfterViewInit,
-  Component,
-  ViewChild,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
+import { Component, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { TableConfig } from '../../models/table.model';
 
 @Component({
   selector: 'f-table',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './table.html',
   styleUrl: './table.scss',
 })
-export class Table implements OnInit, AfterViewInit, OnChanges {
-  @Input({ required: true }) config!: TableConfig;
-
-  displayedColumns: string[] = [];
-  dataSource!: MatTableDataSource<any>;
-
-  filterPlaceholder: string = 'Buscar...';
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  showFilter: boolean = true;
-  noDataMessage: string = 'No se encontraron datos';
-  filterValue: string = ''; // ← AÑADE ESTA PROPIEDAD
+export class Table implements AfterViewInit {
+  @Input() config!: TableConfig;
+  @Output() rowClick = new EventEmitter<{ row: any; param?: string }>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  dataSource!: MatTableDataSource<any>;
+  displayedColumns: string[] = [];
+  filterValue: string = '';
+
+  // Propiedades para acceso rápido
+  showFilter: boolean = true;
+  filterPlaceholder: string = 'Buscar...';
+  pageSizeOptions: number[] = [5, 10, 20];
+  noDataMessage: string = 'No hay datos disponibles';
 
   ngOnInit() {
     this.initializeTable();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['config'] && !changes['config'].firstChange) {
-      this.initializeTable();
-      this.updatePaginatorAndSort();
-    }
-  }
-
   ngAfterViewInit() {
-    this.updatePaginatorAndSort();
-  }
-
-  private initializeTable() {
-    if (!this.config) {
-      console.error('No se proporcionó configuración a la tabla');
-      return;
-    }
-
-    this.displayedColumns = this.config.columns.map((col) => col.key);
-    this.dataSource = new MatTableDataSource(this.config.data || []);
-
-    this.filterPlaceholder = this.config.filterPlaceholder || this.filterPlaceholder;
-    this.pageSizeOptions = this.config.pageSizeOptions || this.pageSizeOptions;
-    this.showFilter =
-      this.config.showFilter !== undefined ? this.config.showFilter : this.showFilter;
-    this.noDataMessage = this.config.noDataMessage || this.noDataMessage;
-
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      const searchStr = filter.toLowerCase();
-      return this.displayedColumns.some((column) => {
-        const columnValue = this.getColumnValue(data, column);
-        return columnValue.toLowerCase().includes(searchStr);
-      });
-    };
-  }
-
-  private updatePaginatorAndSort() {
     if (this.dataSource) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
   }
 
+  private initializeTable() {
+    // Extraer las columnas del config
+    this.displayedColumns = this.config.columns.map((col) => col.key);
+
+    // Inicializar el dataSource
+    this.dataSource = new MatTableDataSource(this.config.data);
+
+    // Configurar propiedades opcionales
+    this.showFilter = this.config.showFilter ?? true;
+    this.filterPlaceholder = this.config.filterPlaceholder ?? 'Buscar...';
+    this.pageSizeOptions = this.config.pageSizeOptions ?? [5, 10, 20];
+    this.noDataMessage = this.config.noDataMessage ?? 'No hay datos disponibles';
+  }
+
+  getColumnLabel(columnKey: string): string {
+    const column = this.config.columns.find((col) => col.key === columnKey);
+    return column?.label || columnKey;
+  }
+
+  getColumnValue(row: any, columnKey: string): any {
+    const column = this.config.columns.find((col) => col.key === columnKey);
+    const value = row[columnKey];
+
+    // Si hay una función de formato, la aplicamos
+    if (column?.format) {
+      return column.format(value);
+    }
+
+    return value;
+  }
+
+  isColumnSortable(columnKey: string): boolean {
+    const column = this.config.columns.find((col) => col.key === columnKey);
+    return column?.sortable !== false;
+  }
+
   applyFilter(event: Event) {
-    const inputValue = (event.target as HTMLInputElement).value;
-    this.filterValue = inputValue; // ← GUARDA EL VALOR
-    this.dataSource.filter = inputValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.filterValue = filterValue.trim().toLowerCase();
+    this.dataSource.filter = this.filterValue;
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  getColumnLabel(key: string): string {
-    const column = this.config.columns.find((col) => col.key === key);
-    return column?.label || key;
-  }
-
-  getColumnValue(row: any, key: string): string {
-    const column = this.config.columns.find((col) => col.key === key);
-    const value = row[key];
-
-    if (column?.format) {
-      return column.format(value);
+  onRowClick(row: any) {
+    if (this.config.clickableRows) {
+      this.rowClick.emit({
+        row,
+        param: this.config.clickableParams,
+      });
     }
-
-    return value != null ? value.toString() : '';
   }
 
-  isColumnSortable(key: string): boolean {
-    const column = this.config.columns.find((col) => col.key === key);
-    return column?.sortable !== false;
+  get isClickable(): boolean {
+    return this.config.clickableRows ?? false;
   }
 }
