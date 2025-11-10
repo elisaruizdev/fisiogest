@@ -7,6 +7,7 @@ import { TableConfig } from '../../../shared/models/table.model';
 import { Table } from '../../../shared/ui/table/table'; 
 import { DetailPatient } from './detail-patient/detail-patient';
 import { MatDialog } from '@angular/material/dialog';
+import { NewPatient } from './new-patient/new-patient';
 
 @Component({
   selector: 'app-patients',
@@ -114,6 +115,12 @@ export class Patients {
 
     this.dialog.open(DetailPatient, {
      data: paciente,
+      width: '800px'
+    });
+  }
+
+  abrirNuevoPaciente(): void {
+    this.dialog.open(NewPatient, {
       width: '800px'
     });
   }
