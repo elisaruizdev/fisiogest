@@ -1,18 +1,7 @@
 <modal [title]="'Historia Clínica - ' + paciente.nombre">
-    <div class="patient-info">
-        <div class="info-section">
-            <h3>Información del Paciente</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <label>ID:</label>
-                    <span>{{ paciente.id }}</span>
-                </div>
-                <div class="info-item">
-                    <label>Nombre:</label>
-                    <span>{{ paciente.nombre }}</span>
-                </div>
-        
-            </div>
-        </div>
+    @for (dato of pacientesData; track dato.label) {
+    <div class="personal-data">
+        <card-info [label]="dato.label" [value]="dato.value" [editable]="true"></card-info>
     </div>
+    }
 </modal>
