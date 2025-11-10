@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "gestion": {
+    "fisiogest": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "gestion:build:production"
+              "buildTarget": "fisiogest:build:production"
             },
             "development": {
-              "buildTarget": "gestion:build:development"
+              "buildTarget": "fisiogest:build:development"
             }
           },
           "defaultConfiguration": "development"
