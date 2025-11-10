@@ -1,7 +1,23 @@
 <modal [title]="'Historia Clínica - ' + paciente.nombre">
-    @for (dato of pacientesData; track dato.label) {
-    <div class="personal-data">
+
+    <section class="personal-data-grid">
+        @for (dato of pacientesData; track dato.label) {
         <card-info [label]="dato.label" [value]="dato.value" [editable]="true"></card-info>
-    </div>
-    }
+        }
+    </section>
+
+    <section class="detailPatient__menu">
+        <menu-detail-patient (tabChange)="onTabChange($event)"></menu-detail-patient>
+        @if(activeTab === 'clinical') {
+        <app-clinical-history></app-clinical-history>
+        }
+
+        @if(activeTab === 'treatments') {
+        <app-treatments></app-treatments>
+        }
+
+        @if(activeTab === 'sessions') {
+        <app-sessions-history></app-sessions-history>
+        }
+    </section>
 </modal>

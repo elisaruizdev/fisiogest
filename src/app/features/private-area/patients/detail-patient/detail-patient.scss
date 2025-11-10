@@ -1,0 +1,15 @@
+.personal-data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 1rem; 
+}
+
+.detailPatient__menu {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .personal-data-grid {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
