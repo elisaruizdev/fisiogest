@@ -12,4 +12,6 @@ export interface TableConfig {
   pageSizeOptions?: number[];
   showFilter?: boolean;
   noDataMessage?: string;
+  clickableRows?: boolean;
+  clickableParams?: string;
 }

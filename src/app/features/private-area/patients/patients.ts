@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonUI } from '../../../shared/ui/button/button';
-import { RowClickEvent, TableConfig } from '../../../shared/models/table.model';
+import { TableConfig } from '../../../shared/models/table.model';
 import { Table } from '../../../shared/ui/table/table'; 
 import { DetailPatient } from './detail-patient/detail-patient';
 import { MatDialog } from '@angular/material/dialog';
@@ -100,7 +100,7 @@ export class Patients {
     ];
   }
 
-  onPacienteClick(event: RowClickEvent): void {
+  onPacienteClick(event: any): void {
     const { row, param } = event;
     console.log('Paciente seleccionado:', row);
     console.log('Parámetro:', param); 
