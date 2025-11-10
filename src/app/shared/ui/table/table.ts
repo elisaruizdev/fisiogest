@@ -15,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TableConfig } from '../../models/table.model';
 
 @Component({
-  selector: 'app-table',
+  selector: 'f-table',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
   templateUrl: './table.html',
