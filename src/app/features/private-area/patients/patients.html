@@ -2,8 +2,7 @@
     <div class="patients__header">
         <!-- <h1 class="patients__title">Gestión de pacientes</h1> -->
         <p class="patients__subtitle">Administra la información de tus pacientes y su tratamiento</p>
-
-        <button-ui [title]="'Nuevo paciente'" [icon]="'icons/add.svg'"></button-ui>
+        <button-ui [title]="'Nuevo paciente'" [icon]="'icons/add.svg'" (click)="abrirNuevoPaciente()"></button-ui>
     </div>
 
     <section class="patients__table">
