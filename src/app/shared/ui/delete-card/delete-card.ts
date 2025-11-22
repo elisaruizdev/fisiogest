@@ -50,7 +50,6 @@ export class DeleteCard {
   }
 
   confirmDelete(): void {
-    console.log('Eliminar paciente');
     this.showDeleteModal = false;
   }
 }

@@ -167,7 +167,6 @@ export class NewPatient implements OnInit {
     console.log('Datos del nuevo paciente:', patientData);
     
     const formattedData = this.formatPatientData(patientData);
-    console.log('Datos formateados:', formattedData);
     alert('Paciente creado (revisar consola para ver datos)');
     this.closeModal();
   }
