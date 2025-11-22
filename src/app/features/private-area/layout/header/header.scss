@@ -1,53 +1,56 @@
-    .header-private {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        background: linear-gradient(90deg, #1D0A49 0%, #4F0FE6 100%);
-        color: white;
+.header-private {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(90deg, #1d0a49 0%, #4f0fe6 100%);
+  color: white;
 
-    &__title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0;
-            font-family: MuseoModerno, sans-serif;
-        }
-    
-        &__user {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-    
-        &__avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: white;
-            color: #1D0A49;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            font-family: MuseoModerno, sans-serif;
-        }
-    
-        &__user-info {
-            display: flex;
-            flex-direction: column;
-        }
-    
-        &__user-name {
-            font-weight: 600;
-            font-size: 1rem;
-            font-family: MuseoModerno, sans-serif;
-        }
-    
-        &__user-role {
-            font-size: 0.75rem;
-            opacity: 0.9;
-        }
-    }
+  &__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    font-family: MuseoModerno, sans-serif;
+  }
 
-    
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    color: #1d0a49;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: MuseoModerno, sans-serif;
+  }
+
+  &__user-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__user-name {
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: MuseoModerno, sans-serif;
+  }
+
+  &__user-role {
+    font-size: 0.75rem;
+    opacity: 0.9;
+  }
+  &__logout {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+}
