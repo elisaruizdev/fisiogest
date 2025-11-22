@@ -7,6 +7,11 @@ export const AUTH_ROUTES: Routes = [
       import('./components/login-layout/login-layout').then((m) => m.LoginLayout),
     children: [
       {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
+      {
         path: 'login',
         loadComponent: () => import('./pages/login/login').then((m) => m.Login),
         title: 'Iniciar sesión - Fisiogest',
@@ -17,15 +22,10 @@ export const AUTH_ROUTES: Routes = [
         title: 'Solicitar acceso - Fisiogest',
       },
       {
-        path: 'resetear-contraseña/:token',
+        path: 'resetear-contraseña',
         loadComponent: () =>
           import('./pages/reset-password/reset-password').then((m) => m.ResetPassword),
         title: 'Restablecer contraseña - Fisiogest',
-      },
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
       },
       {
         path: 'verificar-registro',
