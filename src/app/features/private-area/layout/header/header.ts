@@ -19,10 +19,20 @@ export class Header {
   userInfo = input<any>();
   toggleSidenav = output<void>();
 
+  userName!: string;
+  userRole!: string;
+  initials!: string;
+
   constructor(private routes: Router) {}
 
   onToggleSidenav(): void {
     this.toggleSidenav.emit();
+  }
+
+  ngOnInit(): void {
+    this.userName = sessionStorage.getItem('name') || 'Usuario';
+    this.initials = this.userName.split(' ').map((n) => n.slice(0, 2)).join('').toUpperCase();
+    this.userRole = sessionStorage.getItem('id_physio')? 'Fisioterapeuta' : 'Desconocido';
   }
 
   logout() {
