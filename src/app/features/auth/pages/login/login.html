@@ -8,31 +8,35 @@
         <div class="login-form__field">
             <label class="login-form__label" for="email">Email</label>
             <div class="login-form__input-wrapper">
-                <img src="icons/arroba.svg" alt="nombre" class="login-form__icon">
-                <input class="login-form__input" type="email" id="email" formControlName="email" placeholder="email@fisiogest.es" />
+                <img src="icons/arroba.svg" alt="email" class="login-form__icon">
+                <input class="login-form__input" type="email" id="email" formControlName="email"
+                    placeholder="email@fisiogest.es" />
             </div>
         </div>
 
         <div class="login-form__field">
             <label class="login-form__label" for="password">Contraseña</label>
             <div class="login-form__input-wrapper">
-                <img src="icons/asterics.svg" alt="nombre" class="login-form__icon">
-                <input class="login-form__input" type="password" id="password" formControlName="password" placeholder="********" />
+                <img src="icons/asterics.svg" alt="contraseña" class="login-form__icon">
+                <input class="login-form__input" type="password" id="password" formControlName="password"
+                    placeholder="********" />
             </div>
         </div>
 
         <div class="login-form__options">
-<!--             <label class="login-form__checkbox">
-                <input type="checkbox" class="login-form__checkbox-input" />
-                <span class="login-form__checkbox-label">Recuérdame</span>
-            </label> -->
             <a routerLink="/recuperar-contraseña" class="login-form__link">
                 He olvidado mi contraseña
             </a>
         </div>
 
-        <button type="submit" class="login-form__button">
-            Iniciar sesión
+        @if (errorMessage()) {
+        <div class="login-form__error-box">
+            {{ errorMessage() }}
+        </div>
+        }
+
+        <button type="submit" class="login-form__button" [disabled]="loginForm.invalid || isLoading()">
+            {{ isLoading() ? 'Iniciando sesión...' : 'Iniciar sesión' }}
         </button>
 
         <div class="login-form__divider">
