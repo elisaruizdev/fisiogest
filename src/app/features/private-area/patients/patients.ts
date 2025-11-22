@@ -103,25 +103,22 @@ export class Patients {
 
   onPacienteClick(event: any): void {
     const { row, param } = event;
-    console.log('Paciente seleccionado:', row);
-    console.log('Parámetro:', param); 
-
     this.abrirDetallePaciente(row);
   }
 
   private abrirDetallePaciente(paciente: any): void {
-    console.log('Abrir detalle del paciente:', paciente.nombre);
-    console.log('ID del paciente:', paciente.id);
-
     this.dialog.open(DetailPatient, {
-     data: paciente,
-      width: '800px'
+      data: paciente,
+      width: '1000px',
+      maxWidth: '100vw',
+      height: 'auto',
+      panelClass: 'fullscreen-dialog',
     });
   }
 
   abrirNuevoPaciente(): void {
     this.dialog.open(NewPatient, {
-      width: '800px'
+      width: '1800px'
     });
   }
 }

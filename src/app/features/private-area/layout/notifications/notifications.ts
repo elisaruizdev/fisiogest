@@ -24,19 +24,16 @@ export class Notifications {
   }
 
   onNotificationClick(notification: Notification): void {
-    console.log('Clicked notification:', notification);
     // TODO: Implementar navegación o acción según el tipo de notificación
   }
 
   onDismissNotification(event: Event, notification: Notification): void {
     event.stopPropagation(); // Evitar que se ejecute onNotificationClick
-    console.log('Dismissing notification:', notification);
     // TODO: Implementar dismiss de notificación
     // this.notificationService.dismiss(notification.id);
   }
 
   onClearAll(): void {
-    console.log('Clearing all notifications');
     // TODO: Implementar limpiar todas las notificaciones
     // this.notificationService.clearAll();
   }

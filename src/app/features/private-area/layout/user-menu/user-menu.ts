@@ -37,8 +37,6 @@ export class UserMenu {
   ];
 
   onLogout(): void {
-    console.log('Cerrando sesión...');
-    // TODO: Implementar lógica de logout
     // this.authService.logout();
     this.router.navigate(['/auth/login']);
   }

@@ -1,0 +1,41 @@
+<div class="delete-confirmation">
+    <div class="delete-confirmation__header">
+        <span class="delete-confirmation__icon">⚠️</span>
+        <h2 class="delete-confirmation__title">{{ title }}</h2>
+    </div>
+
+    <div class="delete-confirmation__body">
+        <p class="delete-confirmation__message">
+            {{ messagePrefix }}
+            <strong class="delete-confirmation__highlight">{{ highlightText }}</strong>
+            {{ messageSuffix }}
+        </p>
+
+        @if(items.length > 0) {
+        <ul class="delete-confirmation__list">
+            @for(item of items; track $index) {
+            <li class="delete-confirmation__list-item">
+                <span class="delete-confirmation__item-icon">✗</span>
+                {{ item }}
+            </li>
+            }
+        </ul>
+        }
+
+        <p class="delete-confirmation__warning">{{ warningMessage }}</p>
+    </div>
+
+    <div class="delete-confirmation__footer">
+        <button type="button" class="delete-confirmation__button delete-confirmation__button--cancel"
+            (click)="onCancel()">
+            <span class="delete-confirmation__button-icon">✕</span>
+            {{ cancelText }}
+        </button>
+
+        <button type="button" class="delete-confirmation__button delete-confirmation__button--confirm"
+            (click)="onConfirm()">
+            <span class="delete-confirmation__button-icon">🗑️</span>
+            {{ confirmText }}
+        </button>
+    </div>
+</div>
