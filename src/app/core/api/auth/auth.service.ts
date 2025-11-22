@@ -4,7 +4,5 @@ import { Injectable } from "@angular/core";
   providedIn: 'root',
 })
 export class Auth {
-    login() { }
-    register(id: string, name: string, email: string, password: string, role: string = "user") { }
-    logout() { }
+
 }
