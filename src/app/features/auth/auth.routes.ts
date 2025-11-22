@@ -17,12 +17,6 @@ export const AUTH_ROUTES: Routes = [
         title: 'Solicitar acceso - Fisiogest',
       },
       {
-        path: 'recuperar-contraseña',
-        loadComponent: () =>
-          import('./pages/forgot-password/forgot-password').then((m) => m.ForgotPassword),
-        title: 'Recuperar contraseña - Fisiogest',
-      },
-      {
         path: 'resetear-contraseña/:token',
         loadComponent: () =>
           import('./pages/reset-password/reset-password').then((m) => m.ResetPassword),
@@ -38,6 +32,12 @@ export const AUTH_ROUTES: Routes = [
         loadComponent: () =>
           import('./pages/verify-register/verify-register').then((m) => m.VerifyRegister),
         title: 'Verificar email - Fisiogest',
+      },
+      {
+        path: 'recuperar-contraseña',
+        loadComponent: () =>
+          import('./pages/forgot-password/forgot-password').then((m) => m.ForgotPassword),
+        title: 'Recuperar contraseña - Fisiogest',
       },
     ],
   },
