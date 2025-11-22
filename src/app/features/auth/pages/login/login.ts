@@ -1,40 +1,57 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from "@angular/router";
+import { Component, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, ReactiveFormsModule],
+  standalone: true,
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrl: './login.scss',
 })
 export class Login {
+  loginForm: FormGroup;
+  isLoading = signal(false);
+  errorMessage = signal('');
 
-  loginForm!: FormGroup;
-
-  constructor(private fb: FormBuilder, private routes: Router, private login: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
-  sendFormLogin() {
-    if (this.loginForm.valid) {
-      const email = this.loginForm.get('email')?.value;
-      const password = this.loginForm.get('password')?.value;
-      this.login.login({ email, password }).subscribe(res => {
-        sessionStorage.setItem('token', res.access_token);
-        sessionStorage.setItem('id_physio', res.user.id_physio.toString()); 
-        sessionStorage.setItem('name', res.user.name);
-           this.routes.navigate(['/dashboard']);
-      }, error => {
-        console.error('Error en el login', error);
-      });
-    } else { 
-      console.error('Error al enviar el formulario de login');
+  sendFormLogin(): void {
+    if (this.loginForm.invalid) {
+      return;
     }
+
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+
+    const { email} = this.loginForm.value;
+
+    this.authService.login(email).subscribe({
+      next: (res) => {
+        sessionStorage.setItem('token', res.access_token);
+        sessionStorage.setItem('id_physio', res.user.id_physio.toString());
+        sessionStorage.setItem('name', res.user.name);
+
+        this.isLoading.set(false);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        console.error('Error en el login', error);
+        this.isLoading.set(false);
+
+        if (error.status === 401) {
+          this.errorMessage.set('Email o contraseña incorrectos');
+        } else {
+          this.errorMessage.set('Error al iniciar sesión. Inténtalo de nuevo.');
+        }
+      },
+    });
   }
 }
