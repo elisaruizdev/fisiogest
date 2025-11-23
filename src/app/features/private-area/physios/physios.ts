@@ -7,6 +7,7 @@ import { Table } from '../../../shared/ui/table/table';
 import { MatDialog } from '@angular/material/dialog';
 import { PhysiosService } from './services/physios.service';
 import { Physio } from './models/physios.model';
+import { DetailPhysio } from './detail-physio/detail-physio';
 
 
 @Component({
@@ -117,11 +118,25 @@ export class Physios {
 
   onPhysioClick(event: any): void {
     const { row } = event;
-    this.abrirDetallePhysio(row);
+    this.physiosService.getPhysioById(row.id).subscribe({
+      next: (physio) => {
+        this.abrirDetallePhysio(physio);
+      },
+      error: (error) => {
+        console.error('Error al cargar fisioterapeuta:', error);
+        alert('Error al cargar la información del fisioterapeuta');
+      },
+    });
   }
 
-  private abrirDetallePhysio(physio: any): void {
-    console.log('Abrir detalle de fisio:', physio);
+  private abrirDetallePhysio(physioID: Physio): void {
+    this.dialog.open(DetailPhysio, {
+      data: physioID,
+      width: '1000px',
+      maxWidth: '100vw',
+      height: 'auto',
+      panelClass: 'fullscreen-dialog',
+    });
   }
 
   togglePendingRequests(): void {

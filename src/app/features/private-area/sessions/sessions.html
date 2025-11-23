@@ -1,1 +1,14 @@
-<p>sessions works!</p>
+<div class="sessions">
+    <div class="sessions__header">
+        <div>
+            <p class="sessions__subtitle">Administra las citas y sesiones de tus pacientes</p>
+        </div>
+    <button-ui  [title]="'Nueva sesión'" [icon]="'icons/add.svg'"  (click)="abrirNuevaCita()">
+    </button-ui>
+    </div>
+
+    <section class="sessions__table">
+        <f-table [config]="listadoAppointmentsConfig()" (rowClick)="onAppointmentClick($event)">
+        </f-table>
+    </section>
+</div>

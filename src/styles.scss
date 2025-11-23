@@ -1,21 +1,12 @@
-// ============================================
-// FISIOGEST - ESTILOS GLOBALES
-// ============================================
-
-// ABSTRACTS (Variables, funciones, mixins)
-@forward 'scss/abstracts/variables';
 @forward 'scss/abstracts/functions';
 @forward 'scss/abstracts/mixins';
 
-// BASE (Reset y tipografía)
 @use 'scss/base/reset';
 @use 'scss/base/typography';
 
-// LAYOUTS (Estructuras de página)
 @use 'scss/layouts/auth-layout';
 @use 'scss/layouts/dashboard-layout';
 
-// COMPONENTS (Componentes)
 @use 'scss/components/auth-form';
 @use 'scss/components/header';
 @use 'scss/components/nav-tabs';
