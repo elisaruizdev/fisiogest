@@ -1,0 +1,20 @@
+<div class="new-session">
+    <div class="new-session__header">
+        <h2>Nueva Cita</h2>
+        <button mat-icon-button [mat-dialog-close]>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div class="new-session__content">
+        @if (appointmentFormConfig()) {
+        <f-form [config]="appointmentFormConfig()!" [submitButtonText]="'Crear Cita'"
+            (formSubmit)="onSubmitAppointment($event)" (formCancel)="onCancelForm()" [showCancelButton]="true">
+        </f-form>
+        } @else {
+        <div style="padding: 2rem; text-align: center;">
+            <p>Cargando formulario...</p>
+        </div>
+        }
+    </div>
+</div>
