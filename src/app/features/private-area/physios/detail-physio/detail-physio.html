@@ -1,0 +1,44 @@
+<div class="detail-physio">
+    <div class="detail-physio__header">
+        <h2>Detalle del Fisioterapeuta</h2>
+        <button mat-icon-button (click)="onCancel()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div class="detail-physio__content">
+        <div class="info-section">
+            <h3>Información de Registro (No editable)</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Nombre Completo</label>
+                    <p>{{ physio.name }} {{ physio.surname }} {{ physio.second_surname || '' }}</p>
+                </div>
+                <div class="info-item">
+                    <label>Email</label>
+                    <p>{{ physio.email }}</p>
+                </div>
+                <div class="info-item">
+                    <label>Estado</label>
+                    <p>{{ getStatusLabel(physio.status) }}</p>
+                </div>
+                <div class="info-item">
+                    <label>Fecha de Alta</label>
+                    <p>{{ formatDate(physio.created_at) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="edit-section">
+            <h3>Información Editable</h3>
+            <f-form [config]="physioFormConfig" [submitButtonText]="'Guardar Cambios'"
+                (formSubmit)="onSubmitPhysio($event)" [showCancelButton]="false">
+            </f-form>
+        </div>
+    </div>
+    <div class="detail-physio__actions">
+        <button mat-raised-button color="warn" (click)="onDelete()">
+            <mat-icon>delete</mat-icon>
+            Eliminar Fisioterapeuta
+        </button>
+    </div>
+</div>
