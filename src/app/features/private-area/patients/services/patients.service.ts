@@ -16,4 +16,8 @@ export class PatientsService {
   createPatient(patient: CreatePatient): Observable<Patient> {
     return this.http.post<Patient>(this.apiUrl, patient);
   }
+
+  getAllPatients(): Observable<Patient[]> {
+    return this.http.get<Patient[]>(this.apiUrl);
+  }
 }
