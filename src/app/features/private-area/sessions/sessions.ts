@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AppointmentsService } from './services/appointments.service';
 import { Appointment } from './models/appointment.model';
 import { ButtonUI } from '../../../shared/ui/button/button';
+import { NewSession } from './new-session/new-session';
 
 @Component({
   selector: 'app-sessions',
@@ -136,7 +137,17 @@ export class Sessions {
   }
 
   abrirNuevaCita(): void {
-    console.log('Abrir modal nueva cita');
-    // Aquí abriremos el modal de nueva cita
+    const dialogRef = this.dialog.open(NewSession, {
+      width: '800px',
+      maxWidth: '100vw',
+      height: 'auto',
+      panelClass: 'fullscreen-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result?.action === 'created') {
+        this.getAllAppointments(); // Recargar la tabla
+      }
+    });
   }
 }
