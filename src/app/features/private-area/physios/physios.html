@@ -1,1 +1,17 @@
-<p>physios works!</p>
+<div class="physios">
+    <div class="physios__header">
+        <p class="physios__subtitle">Administra la información de tus fisioterapeutas</p>
+    </div>
+
+    @if (hasPendingPhysios()) {
+    <div class="physios__pending-alert">
+        <mat-icon>warning</mat-icon>
+        <span>Tienes {{ pendingPhysios().length }} fisioterapeuta(s) pendiente(s) de aprobar</span>
+        <button mat-button color="primary">Ver solicitudes</button>
+    </div>
+    }
+
+    <section class="physios__table">
+        <f-table [config]="listadoPhysiosConfig()" (rowClick)="onPhysioClick($event)"></f-table>
+    </section>
+</div>
