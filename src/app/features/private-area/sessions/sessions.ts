@@ -9,6 +9,7 @@ import { AppointmentsService } from './services/appointments.service';
 import { Appointment } from './models/appointment.model';
 import { ButtonUI } from '../../../shared/ui/button/button';
 import { NewSession } from './new-session/new-session';
+import { DetailSession } from './detail-session/detail-session';
 
 @Component({
   selector: 'app-sessions',
@@ -132,8 +133,23 @@ export class Sessions {
   }
 
   private abrirDetalleAppointment(appointment: Appointment): void {
-    console.log('Abrir detalle de cita:', appointment);
-    // Aquí abriremos el modal de detalle
+    const dialogRef = this.dialog.open(DetailSession, {
+      data: appointment,
+      width: '1000px',
+      maxWidth: '100vw',
+      height: 'auto',
+      panelClass: 'fullscreen-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (
+        result?.action === 'updated' ||
+        result?.action === 'cancelled' ||
+        result?.action === 'deleted'
+      ) {
+        this.getAllAppointments();
+      }
+    });
   }
 
   abrirNuevaCita(): void {
@@ -146,7 +162,7 @@ export class Sessions {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.action === 'created') {
-        this.getAllAppointments(); // Recargar la tabla
+        this.getAllAppointments();
       }
     });
   }
