@@ -17,6 +17,7 @@ import { Physio } from './models/physios.model';
 })
 export class Physios {
   physios = signal<Physio[]>([]);
+  showPendingRequests = signal<boolean>(false);
 
   pendingPhysios = computed(() =>
     this.physios().filter((p) => p.status === 'pending_verification')
@@ -121,5 +122,39 @@ export class Physios {
 
   private abrirDetallePhysio(physio: any): void {
     console.log('Abrir detalle de fisio:', physio);
+  }
+
+  togglePendingRequests(): void {
+    this.showPendingRequests.update((value) => !value);
+  }
+
+  approvePhysio(id: number): void {
+    if (confirm('¿Estás seguro de aprobar esta solicitud?')) {
+      this.physiosService.approvePhysio(id).subscribe({
+        next: () => {
+          alert('Fisioterapeuta aprobado. Se ha enviado el email de verificación.');
+          this.getAllPhysios();
+        },
+        error: (error) => {
+          console.error('Error al aprobar:', error);
+          alert('Error al aprobar la solicitud');
+        },
+      });
+    }
+  }
+
+  rejectPhysio(id: number): void {
+    if (confirm('¿Estás seguro de rechazar esta solicitud?')) {
+      this.physiosService.rejectPhysio(id).subscribe({
+        next: () => {
+          alert('Solicitud rechazada correctamente');
+          this.getAllPhysios();
+        },
+        error: (error) => {
+          console.error('Error al rechazar:', error);
+          alert('Error al rechazar la solicitud');
+        },
+      });
+    }
   }
 }

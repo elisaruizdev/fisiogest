@@ -16,4 +16,12 @@ export class PhysiosService {
   getAllPhysios(): Observable<Physio[]> {
     return this.http.get<Physio[]>(this.apiUrl);
   }
+
+  approvePhysio(id: number): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/approve`, {});
+  }
+
+  rejectPhysio(id: number): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/reject`, {});
+  }
 }

@@ -7,8 +7,31 @@
     <div class="physios__pending-alert">
         <mat-icon>warning</mat-icon>
         <span>Tienes {{ pendingPhysios().length }} fisioterapeuta(s) pendiente(s) de aprobar</span>
-        <button mat-button color="primary">Ver solicitudes</button>
+        <button mat-button color="primary" (click)="togglePendingRequests()">
+            {{ showPendingRequests() ? 'Ocultar solicitudes' : 'Ver solicitudes' }}
+        </button>
     </div>
+
+    @if (showPendingRequests()) {
+    <div class="physios__pending-list">
+        @for (physio of pendingPhysios(); track physio.id_physio) {
+        <div class="pending-request">
+            <div class="pending-request__info">
+                <span class="pending-request__name">{{ physio.name }} {{ physio.surname }}</span>
+                <span class="pending-request__email">{{ physio.email }}</span>
+            </div>
+            <div class="pending-request__actions">
+                <button mat-raised-button color="primary" (click)="approvePhysio(physio.id_physio)">
+                    Aceptar
+                </button>
+                <button mat-raised-button color="warn" (click)="rejectPhysio(physio.id_physio)">
+                    Rechazar
+                </button>
+            </div>
+        </div>
+        }
+    </div>
+    }
     }
 
     <section class="physios__table">
