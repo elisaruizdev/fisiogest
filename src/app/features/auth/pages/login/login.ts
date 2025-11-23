@@ -31,9 +31,9 @@ export class Login {
     this.isLoading.set(true);
     this.errorMessage.set('');
 
-    const { email} = this.loginForm.value;
+    const { email, password} = this.loginForm.value;
 
-    this.authService.login(email).subscribe({
+    this.authService.login(email, password).subscribe({
       next: (res) => {
         sessionStorage.setItem('token', res.access_token);
         sessionStorage.setItem('id_physio', res.user.id_physio.toString());
