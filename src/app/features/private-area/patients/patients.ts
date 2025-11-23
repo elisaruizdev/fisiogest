@@ -118,7 +118,8 @@ export class Patients {
 
   abrirNuevoPaciente(): void {
     this.dialog.open(NewPatient, {
-      width: '1800px'
+      width: '1000px',
+      maxWidth: '100vw',
     });
   }
 }

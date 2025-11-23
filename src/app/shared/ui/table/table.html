@@ -1,15 +1,13 @@
 <div class="table-container">
-    @if (showFilter) {
+<!--     @if (showFilter) {
     <mat-form-field class="filter-field">
         <mat-label>Buscar</mat-label>
         <input matInput (keyup)="applyFilter($event)" [placeholder]="filterPlaceholder">
     </mat-form-field>
-    }
+    } -->
 
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
-
-            <!-- Columnas dinámicas -->
             @for (column of displayedColumns; track column) {
             <ng-container [matColumnDef]="column">
                 <th mat-header-cell *matHeaderCellDef [mat-sort-header]="isColumnSortable(column) ? column : ''"

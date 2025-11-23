@@ -3,6 +3,8 @@ import { Validators } from '@angular/forms';
 import { Modal } from '../../../../shared/ui/modal/modal';
 import { Form } from '../../../../shared/ui/form/form';
 import { FormConfig } from '../../../../shared/models/form.model';
+import { CreatePatient } from '../models/patients.model';
+import { PatientsService } from '../services/patients.service';
 
 @Component({
   selector: 'app-new-patient',
@@ -12,47 +14,54 @@ import { FormConfig } from '../../../../shared/models/form.model';
 })
 export class NewPatient implements OnInit {
 
+  constructor(private createPatient: PatientsService) { }
+  
   patientFormConfig: FormConfig = {
     sections: [
-      // SECCIÓN 1: Datos Personales
       {
         title: 'Datos Personales',
         fields: [
           {
-            name: 'nombre',
+            name: 'name',
             label: 'Nombre',
             type: 'text',
-            placeholder: 'Nombre del paciente',
+            placeholder: 'Nombre',
             required: true,
-            validators: [Validators.minLength(2)]
+            validators: [Validators.minLength(2)],
           },
           {
-            name: 'apellidos',
-            label: 'Apellidos',
+            name: 'surname',
+            label: 'Primer apellido',
             type: 'text',
-            placeholder: 'Apellidos completos',
+            placeholder: 'Primer apellido',
             required: true,
-            validators: [Validators.minLength(2)]
+            validators: [Validators.minLength(2)],
           },
           {
-            name: 'dni',
+            name: 'second_surname',
+            label: 'Segundo apellido',
+            type: 'text',
+            placeholder: 'Segundo apellido',
+            required: true,
+            validators: [Validators.minLength(2)],
+          },
+          {
+            name: 'identifier',
             label: 'DNI/NIE',
             type: 'text',
             placeholder: '12345678A',
             required: true,
-            validators: [
-              Validators.pattern(/^[0-9]{8}[A-Z]$|^[XYZ][0-9]{7}[A-Z]$/)
-            ]
+            validators: [Validators.pattern(/^[0-9]{8}[A-Z]$|^[XYZ][0-9]{7}[A-Z]$/)],
           },
           {
-            name: 'fechaNacimiento',
+            name: 'birthdate',
             label: 'Fecha de Nacimiento',
             type: 'date',
             placeholder: 'dd/mm/aaaa',
-            required: true
+            required: true,
           },
           {
-            name: 'genero',
+            name: 'gender',
             label: 'Género',
             type: 'select',
             placeholder: 'Seleccione...',
@@ -60,32 +69,29 @@ export class NewPatient implements OnInit {
             options: [
               { value: 'masculino', label: 'Masculino' },
               { value: 'femenino', label: 'Femenino' },
-              { value: 'otro', label: 'Otro' }
-            ]
+              { value: 'otro', label: 'Otro' },
+            ],
           },
           {
-            name: 'seguroMedico',
+            name: 'health_insurance',
             label: 'Seguro Médico',
             type: 'text',
             placeholder: 'Compañía de seguro',
-            required: false
-          }
-        ]
+            required: false,
+          },
+        ],
       },
-      
-      // SECCIÓN 2: Datos de Contacto
+
       {
         title: 'Datos de Contacto',
         fields: [
           {
-            name: 'telefono',
+            name: 'phone',
             label: 'Teléfono',
             type: 'tel',
-            placeholder: '+34 612 345 678',
+            placeholder: '612 345 678',
             required: true,
-            validators: [
-              Validators.pattern(/^(\+34|0034|34)?[6789]\d{8}$/)
-            ]
+            validators: [Validators.pattern(/^(\|0034|34)?[6789]\d{8}$/)],
           },
           {
             name: 'email',
@@ -93,117 +99,118 @@ export class NewPatient implements OnInit {
             type: 'email',
             placeholder: 'paciente@email.com',
             required: true,
-            validators: [Validators.email]
+            validators: [Validators.email],
           },
           {
-            name: 'direccion',
+            name: 'address',
             label: 'Dirección Completa',
             type: 'text',
             placeholder: 'Calle, número, piso, puerta',
             required: true,
-            cssClass: 'form-field--full'
+            cssClass: 'form-field--full',
           },
           {
-            name: 'ciudad',
+            name: 'city',
             label: 'Ciudad',
             type: 'text',
             placeholder: 'Madrid',
-            required: true
+            required: true,
           },
           {
-            name: 'codigoPostal',
+            name: 'zip',
             label: 'Código Postal',
             type: 'text',
             placeholder: '28001',
             required: true,
-            validators: [
-              Validators.pattern(/^[0-9]{5}$/)
-            ]
+            validators: [Validators.pattern(/^[0-9]{5}$/)],
           },
           {
-            name: 'contactoEmergencia',
+            name: 'emergency_contact',
             label: 'Contacto de Emergencia',
             type: 'text',
             placeholder: 'Nombre y teléfono',
             required: false,
-            cssClass: 'form-field--full'
-          }
-        ]
+            cssClass: 'form-field--full',
+          },
+        ],
       },
-      
-      // SECCIÓN 3: Información Médica Inicial
+
       {
         title: 'Información Médica Inicial',
         subtitle: '(Opcional)',
         fields: [
           {
-            name: 'motivoConsulta',
+            name: 'consultation_reason',
             label: 'Motivo de Consulta',
             type: 'textarea',
             placeholder: '¿Por qué acude el paciente?',
             rows: 4,
             required: false,
-            cssClass: 'form-field--full'
+            cssClass: 'form-field--full',
           },
           {
-            name: 'antecedentesMedicos',
+            name: 'medical_history',
             label: 'Antecedentes Médicos',
             type: 'textarea',
             placeholder: 'Enfermedades previas, cirugías, alergias, medicación actual...',
             rows: 4,
             required: false,
-            cssClass: 'form-field--full'
-          }
-        ]
-      }
-    ]
+            cssClass: 'form-field--full',
+          },
+        ],
+      },
+    ],
   };
 
-  ngOnInit(): void {
-    console.log('Componente NewPatient inicializado');
-  }
+  ngOnInit(): void {}
 
   onSubmitPatient(patientData: any): void {
-    console.log('Datos del nuevo paciente:', patientData);
-    
-    const formattedData = this.formatPatientData(patientData);
-    alert('Paciente creado (revisar consola para ver datos)');
-    this.closeModal();
+     const formattedData: CreatePatient = this.formatPatientData(patientData);
+
+     this.createPatient.createPatient(formattedData).subscribe({
+       next: (response) => {
+         this.showSuccessNotification('Paciente creado correctamente');
+         this.closeModal();
+       },
+       error: (error) => {
+         console.error('Error al crear paciente:', error);
+         this.showErrorNotification('Error al crear el paciente');
+       },
+     });
   }
 
   onCancelForm(): void {
-    console.log('Formulario cancelado');
     this.closeModal();
   }
 
-  closeModal(): void {
-    console.log('Modal cerrado');
-  }
+  closeModal(): void {}
 
-  private formatPatientData(data: any): any {
+  private formatPatientData(data: CreatePatient) {
     return {
-      ...data,
-      dni: data.dni?.toUpperCase().trim(),
-      telefono: data.telefono?.replace(/\s/g, ''),
+      name: this.capitalizeText(data.name),
+      surname: this.capitalizeText(data.surname),
+      second_surname: data.second_surname ? this.capitalizeText(data.second_surname) : undefined,
+      identifier: data.identifier?.toUpperCase().trim(),
+      birthdate: data.birthdate,
+      gender: data.gender || 'otro',
+      phone: data.phone?.replace(/\s/g, ''),
       email: data.email?.toLowerCase().trim(),
-      nombre: this.capitalizeText(data.nombre),
-      apellidos: this.capitalizeText(data.apellidos),
-      ciudad: data.ciudad ? this.capitalizeText(data.ciudad) : null,
-      genero: data.genero || null,
-      seguroMedico: data.seguroMedico?.trim() || null,
-      contactoEmergencia: data.contactoEmergencia?.trim() || null,
-      motivoConsulta: data.motivoConsulta?.trim() || null,
-      antecedentesMedicos: data.antecedentesMedicos?.trim() || null
+      address: data.address?.trim() || undefined,
+      city: data.city ? this.capitalizeText(data.city) : undefined,
+      zip: data.zip?.trim() || undefined,
+      emergency_contact: data.emergency_contact?.trim() || undefined,
+      health_insurance: data.health_insurance?.trim() || undefined,
+      consultation_reason: data.consultation_reason?.trim() || undefined,
+      medical_history: data.medical_history?.trim() || undefined,
     };
   }
-
 
   private capitalizeText(text: string): string {
     if (!text) return '';
     return text
       .toLowerCase()
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   }
 
