@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TabItem } from '../../../layout/models/layout.model';
 
 
 @Component({
