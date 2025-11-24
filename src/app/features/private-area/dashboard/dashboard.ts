@@ -1,45 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Table } from '../../../shared/ui/table/table';
 import { TableConfig } from '../../../shared/models/table.model';
-import { MatButtonModule } from '@angular/material/button';
+import { DashboardService } from './services/dashboard.service';
+import { DashboardStats, TodayAppointment } from './models/dashboard.model';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Table],
+  standalone: true,
+  imports: [CommonModule, Table],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
   currentDate: string = '';
-  sesionesHoyConfig!: TableConfig;
+  dashboardStats = signal<DashboardStats | null>(null);
+  loading = signal<boolean>(true);
 
-  // Estadísticas
-  pacientesActivos: number = 75;
-  sesionesHoy: number = 12;
-  sesionesCompletadas: number = 4;
-  sesionesSemana: number = 50;
-
-  ngOnInit() {
-    this.setCurrentDate();
-    this.initializeTableConfig();
-  }
-
-  private setCurrentDate() {
-    const today = new Date();
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    this.currentDate = today.toLocaleDateString('es-ES', options);
-    // Capitalizar primera letra
-    this.currentDate =
-      'Hoy ' + this.currentDate.charAt(0).toUpperCase() + this.currentDate.slice(1);
-  }
-
-  private initializeTableConfig() {
-    this.sesionesHoyConfig = {
+  sesionesHoyConfig = computed<TableConfig>(() => {
+    const stats = this.dashboardStats();
+    return {
       columns: [
         {
           key: 'hora',
@@ -63,81 +43,92 @@ export class Dashboard {
           label: 'Estado',
         },
       ],
-      data: this.getSesionesHoy(),
+      data: this.mapAppointmentsToTableData(stats?.todayAppointments || []),
       filterPlaceholder: 'Buscar por paciente, fisioterapeuta...',
       pageSizeOptions: [5, 10, 20],
       showFilter: true,
       noDataMessage: 'No hay sesiones programadas para hoy',
     };
+  });
+
+  pacientesActivos = computed(() => this.dashboardStats()?.activePatients || 0);
+  sesionesHoy = computed(() => this.dashboardStats()?.sessionsToday.total || 0);
+  sesionesCompletadas = computed(() => this.dashboardStats()?.sessionsToday.completed || 0);
+  sesionesSemana = computed(() => this.dashboardStats()?.sessionsNextWeek || 0);
+
+  constructor(private dashboardService: DashboardService) {}
+
+  ngOnInit() {
+    this.setCurrentDate();
+    this.loadDashboardStats();
   }
 
-  private getSesionesHoy() {
-    // Aquí normalmente obtendrías los datos de un servicio
-    // Datos de ejemplo:
-    return [
-      {
-        hora: '9:00',
-        paciente: 'María Barrios',
-        fisioterapeuta: 'Ricardo García',
-        tipo: '1ª sesión',
-        estado: 'Confirmada',
+  private setCurrentDate() {
+    const today = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    this.currentDate = today.toLocaleDateString('es-ES', options);
+    this.currentDate =
+      'Hoy ' + this.currentDate.charAt(0).toUpperCase() + this.currentDate.slice(1);
+  }
+
+  private loadDashboardStats() {
+    this.loading.set(true);
+    this.dashboardService.getDashboardStats().subscribe({
+      next: (stats) => {
+        this.dashboardStats.set(stats);
+        this.loading.set(false);
       },
-      {
-        hora: '10:00',
-        paciente: 'Juan Pérez',
-        fisioterapeuta: 'Ana Martínez',
-        tipo: '3ª sesión',
-        estado: 'Pendiente',
+      error: (error) => {
+        console.error('Error al cargar estadísticas:', error);
+        this.loading.set(false);
       },
-      {
-        hora: '11:30',
-        paciente: 'Laura González',
-        fisioterapeuta: 'Ricardo García',
-        tipo: '2ª sesión',
-        estado: 'Confirmada',
-      },
-      {
-        hora: '12:00',
-        paciente: 'Carlos Ruiz',
-        fisioterapeuta: 'Luis Fernández',
-        tipo: '5ª sesión',
-        estado: 'Confirmada',
-      },
-      {
-        hora: '15:00',
-        paciente: 'Ana López',
-        fisioterapeuta: 'Ana Martínez',
-        tipo: '1ª sesión',
-        estado: 'Pendiente',
-      },
-      {
-        hora: '16:00',
-        paciente: 'Pedro Sánchez',
-        fisioterapeuta: 'Ricardo García',
-        tipo: '4ª sesión',
-        estado: 'Confirmada',
-      },
-      {
-        hora: '17:00',
-        paciente: 'Isabel Moreno',
-        fisioterapeuta: 'Luis Fernández',
-        tipo: '2ª sesión',
-        estado: 'Confirmada',
-      },
-      {
-        hora: '18:00',
-        paciente: 'Miguel Torres',
-        fisioterapeuta: 'Ana Martínez',
-        tipo: '6ª sesión',
-        estado: 'Completada',
-      },
-      {
-        hora: '19:00',
-        paciente: 'Carmen Díaz',
-        fisioterapeuta: 'Ricardo García',
-        tipo: '7ª sesión',
-        estado: 'Confirmada',
-      },
-    ];
+    });
+  }
+
+  private mapAppointmentsToTableData(appointments: TodayAppointment[]) {
+    return appointments.map((appointment) => ({
+      id: appointment.id,
+      hora: this.formatTime(appointment.appointment_date),
+      paciente: this.getPatientName(appointment),
+      fisioterapeuta: this.getPhysioName(appointment),
+      tipo: `${appointment.session_number}ª sesión`,
+      estado: this.translateStatus(appointment.status),
+    }));
+  }
+
+  private formatTime(date: Date | string): string {
+    const d = new Date(date);
+    return d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  private getPatientName(appointment: TodayAppointment): string {
+    const parts = [appointment.patient.name, appointment.patient.surname];
+    if (appointment.patient.second_surname) {
+      parts.push(appointment.patient.second_surname);
+    }
+    return parts.join(' ');
+  }
+
+  private getPhysioName(appointment: TodayAppointment): string {
+    const parts = [appointment.physio.name, appointment.physio.surname];
+    if (appointment.physio.second_surname) {
+      parts.push(appointment.physio.second_surname);
+    }
+    return parts.join(' ');
+  }
+
+  private translateStatus(status: string): string {
+    const statusMap: { [key: string]: string } = {
+      scheduled: 'Programada',
+      confirmed: 'Confirmada',
+      completed: 'Completada',
+      cancelled: 'Cancelada',
+    };
+    return statusMap[status] || status;
   }
 }

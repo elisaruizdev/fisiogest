@@ -1,5 +1,6 @@
 export interface TabItem {
-  label: string;
-  route: string;
-  icon: string;
+  id?: string | undefined;
+  label?: string;
+  route?: string;
+  icon?: string;
 }
